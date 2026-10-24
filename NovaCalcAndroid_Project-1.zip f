@@ -1,0 +1,17 @@
+
+      - name: Extract Android project
+        run: |
+          echo "Repository files:"
+          ls -la
+          echo "NovaCalc folder:"
+          ls -la NovaCalc || true
+          ZIP_FILE=$(find . -type f -iname '*.zip' -print -quit)
+          if [ -z "$ZIP_FILE" ]; then
+            echo "No ZIP file found in repository."
+            exit 1
+          fi
+          echo "Using ZIP: $ZIP_FILE"
+          mkdir -p extracted
+          unzip -q "$ZIP_FILE" -d extracted
+          echo "Extracted project files:"
+          find extracted -maxdepth 4 -type f | head -80
