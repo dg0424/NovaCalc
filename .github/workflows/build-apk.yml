@@ -30,7 +30,7 @@ jobs:
 
       - name: Extract Android project ZIP
         run: |
-          unzip -q NovaCalcAndroid_Project.zip -d extracted
+          unzip -q Calculation_App_Project.zip -d extracted
 
       - name: Build APK
         working-directory: extracted/NovaCalcAndroid
