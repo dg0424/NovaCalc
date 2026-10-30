@@ -1,10 +1,10 @@
 
-name: Build NovaCalc APK
+name: Build Calculation APK
 
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [main, master]
 
 permissions:
   contents: read
@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download repository files
+      - name: Checkout source
         uses: actions/checkout@v4
 
       - name: Set up Java
@@ -26,20 +26,14 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '8.7'
-
-      - name: Extract Android project ZIP
-        run: |
-          unzip -q Calculation_App_Project.zip -d extracted
+          gradle-version: '8.9'
 
       - name: Build APK
-        working-directory: extracted/NovaCalcAndroid
         run: gradle assembleDebug
 
-      - name: Save APK
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: NovaCalc-APK
-          path: extracted/NovaCalcAndroid/app/build/outputs/apk/debug/app-debug.apk
-          if-no-files-found: error
+          name: Calculation-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
           
